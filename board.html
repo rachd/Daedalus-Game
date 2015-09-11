@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+</head>
+<body>
+	<canvas id="c" width="1000" height="1000"></canvas>
+	<script>
+		var c = document.querySelector("#c");
+		var ctx = c.getContext("2d");
+
+		/*
+		var image = new Image();
+
+		image.onload = function() {
+			console.log("Loaded image");
+			ctx.drawImage(image, 0, 0, c.width, c.height);
+		}
+
+		image.src="panda.png";
+		*/
+		var data = [180, 180];
+		var colors = ['blue', 'green'];
+		
+		function drawSegment(c, ctx, i) {
+			ctx.save();
+			var centerX = Math.floor(c.width/2);
+			var centerY = Math.floor(c.height/2);
+			radius = Math.floor(c.width/2);
+
+			var startingAngle = degreesToRadians(sumTo(data, i));
+			var arcSize = degreesToRadians(data[i]);
+			var endingAngle = startingAngle + arcSize;
+
+			ctx.beginPath();
+			ctx.moveTo(centerX, centerY);
+			ctx.arc(centerX, centerY, radius, startingAngle, endingAngle, false);
+			ctx.closePath();
+
+			ctx.fillStyle = colors[i];
+			ctx.fill();
+
+			ctx.restore();
+		}
+
+		function degreesToRadians(degrees) {
+			return (degrees * Math.PI)/180;
+		}
+
+		function sumTo(a, i) {
+			var sum = 0;
+			for (var j=0; j<i; j++) {
+				sum += a[j];
+			}
+			return sum;
+		}
+
+	
+		for (var i = 0; i < data.length; i++) {
+			drawSegment(c, ctx, i);
+		}
+		
+
+		/*ctx.strokeRect(0, 0, c.width, c.height);
+		ctx.beginPath();
+		ctx.arc(c.width/2, c.height/2, 100, 0, 2*Math.PI/10);
+		ctx.line()
+		ctx.arc(c.width/2, c.height/2, 100, 2*Math.PI/10, 2*Math.PI/10+2*Math.PI/10);
+		ctx.stroke();
+		ctx.beginPath();
+		ctx.arc(c.with/2), c.height/2, 100, 2*Math.PI/15);
+		ctx.fill();*/
+	</script>
+</body>
+</html>
